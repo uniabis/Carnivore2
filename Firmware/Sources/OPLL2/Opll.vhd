@@ -138,7 +138,8 @@ begin
     XIN, reset, XENA, 
     slot, stage, rhythm, 
     maddr, mdata, 
-    MO, RO, BCMO, BCRO, SDO
+    --MO, RO, 
+    BCMO, BCRO, SDO
   );
 
   
