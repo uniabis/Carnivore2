@@ -24,8 +24,8 @@ entity TemporalMixer is
  --   ro : out std_logic_vector(9 downto 0);
  --<
     BCMO		: out std_logic_vector(15 downto 0);--*
-    BCRO 		: out std_logic_vector(15 downto 0); --*   
-	SDO			: out std_logic--*
+    BCRO 		: out std_logic_vector(15 downto 0) --; --*   
+--    SDO			: out std_logic--*
  -->
     
   );	    
@@ -37,16 +37,16 @@ architecture RTL of TemporalMixer is
 --<
   signal ACMO		: std_logic_vector(15 downto 0);
   signal ACRO 		: std_logic_vector(15 downto 0);
-  signal BCROs		: std_logic_vector(15 downto 0);
-  signal DtRO		: std_logic_vector(15 downto 0);
-  signal IdetRO		: std_logic; 
-  signal IdetROs    : std_logic;   
+--  signal BCROs		: std_logic_vector(15 downto 0);
+--  signal DtRO		: std_logic_vector(15 downto 0);
+--  signal IdetRO		: std_logic; 
+--  signal IdetROs    : std_logic;   
 -->    
 begin
 
-  DtRO <= ACRO - BCROs;
-  IdetRO <= '0' when DtRO(15 downto 10) = "0000" or DtRO(15 downto 12) = "1111" else '1';
-  SDO <= IdetROs;
+--  DtRO <= ACRO - BCROs;
+--  IdetRO <= '0' when DtRO(15 downto 10) = "0000" or DtRO(15 downto 12) = "1111" else '1';
+--  SDO <= IdetROs;
 
   process (clk, reset) 
   begin
@@ -67,8 +67,8 @@ begin
       BCRO <= (others =>'0');--*
       ACMO <= (others =>'0');--*
       ACRO <= (others =>'0');--*
-      BCROs <= (others =>'0');--*
-      IdetROs <= '0';
+--      BCROs <= (others =>'0');--*
+--      IdetROs <= '0';
 -->    
     elsif clk'event and clk = '1' then if clkena='1' then
 --    elsif clk'event and clk = '0' then if clkena='1' then   
@@ -78,13 +78,13 @@ begin
  --       ro <= "1000000000";
 --<        
         if slot = 0 then
-          IdetROs <=IdetRO;
+--          IdetROs <=IdetRO;
           BCMO <= ACMO;
-          BCROs <= ACRO;
+--          BCROs <= ACRO;
           BCRO <= ACRO;
-          if IdetRO = '0' then-- or IdetROs = '1' then -- peak impulse moderate
+--          if IdetRO = '0' then-- or IdetROs = '1' then -- peak impulse moderate
 --            BCRO <= ACRO;
-          end if; 
+--          end if; 
 --        ACMO <= "1000000000000000"; --*
 --        ACRO <= "1000000000000000"; --*
           ACMO <= (others =>'0'); --*

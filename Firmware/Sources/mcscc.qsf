@@ -253,11 +253,11 @@ set_global_assignment -name VHDL_FILE OPLL2/VoiceMemory.vhd
 set_global_assignment -name VHDL_FILE OPLL2/VoiceRom.vhd
 set_global_assignment -name VHDL_FILE mcscc.vhd
 set_global_assignment -name VHDL_FILE lpm_ram.vhd
-set_global_assignment -name VHDL_FILE scc_wave.vhd
+set_global_assignment -name VERILOG_FILE scc_wave.v
 set_global_assignment -name CDF_FILE scc.cdf
 set_global_assignment -name QIP_FILE MPLL1.qip
 set_global_assignment -name QIP_FILE MPLL2.qip
-set_global_assignment -name VHDL_FILE mv16.vhd
+set_global_assignment -name VERILOG_FILE mv16.v
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to pSltDat
 set_instance_assignment -name PASSIVE_RESISTOR "PULL-DOWN" -to "pIDEDat(7)"
 set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(0)"

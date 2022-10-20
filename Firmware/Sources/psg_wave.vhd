@@ -124,16 +124,16 @@ begin
   begin
     if (pSltRst_n = '0') then
 --      PsgRegPtr    <= (others => '0');
-      PsgFreqChA   <= (others => '1');
-      PsgFreqChB   <= (others => '1');
-      PsgFreqChC   <= (others => '1');
-      PsgFreqNoise <= (others => '1');
-      PsgChanSel   <= (others => '1');
-      PsgVolChA    <= (others => '1');
-      PsgVolChB    <= (others => '1');
-      PsgVolChC    <= (others => '1');
-      PsgFreqEnv   <= (others => '1');
-      PsgShapeEnv  <= (others => '1');
+      PsgFreqChA   <= (others => '0');
+      PsgFreqChB   <= (others => '0');
+      PsgFreqChC   <= (others => '0');
+      PsgFreqNoise <= (others => '0');
+      PsgChanSel   <= (others => '0');
+      PsgVolChA    <= (others => '0');
+      PsgVolChB    <= (others => '0');
+      PsgVolChC    <= (others => '0');
+      PsgFreqEnv   <= (others => '0');
+      PsgShapeEnv  <= (others => '0');
       PsgEnvReq    <= '0';
     elsif (pSltClk_n'event and pSltClk_n = '1') then
 --      if (req = '1' and wrt = '1' and adr(1 downto 0) = "00") then

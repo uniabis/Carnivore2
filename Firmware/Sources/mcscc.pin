@@ -64,8 +64,8 @@ CHIP  "mcscc"  ASSIGNED TO AN: EP2C5Q208C8
 
 Pin Name/Usage               : Location  : Dir.   : I/O Standard      : Voltage : I/O Bank  : User Assignment
 -------------------------------------------------------------------------------------------------------------
-~ASDO~ / RESERVED_INPUT_WITH_WEAK_PULLUP : 1         : input  : 3.3-V LVTTL       :         : 1         : N              
-~nCSO~ / RESERVED_INPUT_WITH_WEAK_PULLUP : 2         : input  : 3.3-V LVTTL       :         : 1         : N              
+~ASDO~ / RESERVED_INPUT      : 1         : input  : 3.3-V LVTTL       :         : 1         : N              
+~nCSO~ / RESERVED_INPUT      : 2         : input  : 3.3-V LVTTL       :         : 1         : N              
 MAPpEn                       : 3         : input  : 3.3-V LVTTL       :         : 1         : Y              
 RESERVED_INPUT_WITH_WEAK_PULLUP : 4         :        :                   :         : 1         :                
 RESERVED_INPUT_WITH_WEAK_PULLUP : 5         :        :                   :         : 1         :                
@@ -165,7 +165,7 @@ VCCIO4                       : 98        : power  :                   : 3.3V    
 pSltBdir_n                   : 99        : output : 3.3-V LVTTL       :         : 4         : Y              
 GND                          : 100       : gnd    :                   :         :           :                
 pSltWait_n                   : 101       : output : 3.3-V LVTTL       :         : 4         : Y              
-pSltInt_n                    : 102       : input  : 3.3-V LVTTL       :         : 4         : Y              
+pSltInt_n                    : 102       : output : 3.3-V LVTTL       :         : 4         : Y              
 pSltRsv5                     : 103       : input  : 3.3-V LVTTL       :         : 4         : Y              
 pSltRfsh_n                   : 104       : input  : 3.3-V LVTTL       :         : 4         : Y              
 pSltCs12                     : 105       : input  : 3.3-V LVTTL       :         : 3         : Y              

@@ -16,11 +16,11 @@ entity opll is
     CS_n    : in std_logic;
     WE_n    : in std_logic;
     IC_n    : in std_logic;
-    MO      : out std_logic_vector(9 downto 0);
-    RO      : out std_logic_vector(9 downto 0);
+--    MO      : out std_logic_vector(9 downto 0);
+--    RO      : out std_logic_vector(9 downto 0);
     BCMO	: out std_logic_vector(15 downto 0);
-    BCRO 	: out std_logic_vector(15 downto 0); 
-    SDO		: out std_logic
+    BCRO 	: out std_logic_vector(15 downto 0) --;
+--    SDO		: out std_logic
   );    
 end opll;
 
@@ -138,8 +138,8 @@ begin
     XIN, reset, XENA, 
     slot, stage, rhythm, 
     maddr, mdata, 
-    --MO, RO, 
-    BCMO, BCRO, SDO
+    --MO, RO,
+	 BCMO, BCRO --, SDO
   );
 
   

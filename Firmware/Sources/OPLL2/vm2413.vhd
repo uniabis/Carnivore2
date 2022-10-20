@@ -266,8 +266,8 @@ package VM2413 is
   --  mo : out std_logic_vector(9 downto 0);
   --  ro : out std_logic_vector(9 downto 0);
     BCMO		: out std_logic_vector(15 downto 0);
-	BCRO 		: out std_logic_vector(15 downto 0);
-	SDO			: out std_logic
+	BCRO 		: out std_logic_vector(15 downto 0) --;
+--	SDO			: out std_logic
   );	    
   end component;
  

@@ -25,7 +25,7 @@ entity mcscc is
     pSltCs12    : IN std_logic;
     pSltRfsh_n  : IN std_logic;
     pSltWait_n  : OUT std_logic;
-    pSltInt_n   : IN std_logic;
+    pSltInt_n   : OUT std_logic;
     pSltM1_n    : IN std_logic;
     pSltMerq_n  : IN std_logic;
 
@@ -133,8 +133,8 @@ architecture RTL of mcscc is
 --      mo     : out std_logic_vector(9 downto 0);
 --      ro     : out std_logic_vector(9 downto 0);
       BCMO		: out std_logic_vector(15 downto 0);
-	  BCRO 		: out std_logic_vector(15 downto 0);
-      SDO	 : out std_logic
+	  BCRO 		: out std_logic_vector(15 downto 0)
+--      SDO	 : out std_logic
       );
   end component;
   
@@ -147,15 +147,15 @@ architecture RTL of mcscc is
 		locked		: OUT STD_LOGIC 
 	);
   end component;
-  component MPLL2
-	PORT
-	(
-		areset		: IN STD_LOGIC  := '0';
-		inclk0		: IN STD_LOGIC  := '0';
-		c0		: OUT STD_LOGIC ;
-		locked		: OUT STD_LOGIC 
-	);
-  end component;
+--  component MPLL2
+--	PORT
+--	(
+--		areset		: IN STD_LOGIC  := '0';
+--		inclk0		: IN STD_LOGIC  := '0';
+--		c0		: OUT STD_LOGIC ;
+--		locked		: OUT STD_LOGIC 
+--	);
+--  end component;
   component mv16
     port(
 	    sin16		: IN std_logic_vector(15 downto 0);
@@ -174,8 +174,17 @@ architecture RTL of mcscc is
       PsgRegWe  : IN std_logic
     );
   end component;
-  
-  
+
+  -- ASMI (Altera specific component)
+  component cycloneii_asmiblock 
+    port(
+      dclkin   : in  std_logic;
+      scein    : in  std_logic;
+      sdoin    : in  std_logic;
+      data0out : out std_logic;
+      oe       : in  std_logic);
+  end component;
+
   signal pSltClk_n   : std_logic;
   signal DevHit      : std_logic;
   signal Dec1FFE     : std_logic;
@@ -361,7 +370,7 @@ architecture RTL of mcscc is
 --  PLL
   signal areset		: STD_LOGIC;
   signal c0				: STD_LOGIC;
-  signal clk42m 	: std_logic;
+--  signal clk42m 	: std_logic;
   
 -- Audio DAC YAC516
   signal ADACDiv	: std_logic_vector(7 downto 0);
@@ -371,18 +380,18 @@ architecture RTL of mcscc is
   signal T1			: std_logic;
   signal LRCKe		: std_logic;
   signal ACL		: std_logic_vector(19 downto 0);
-  signal ACR		: std_logic_vector(19 downto 0);
+--  signal ACR		: std_logic_vector(19 downto 0);
   signal SCL		: std_logic_vector(11 downto 0);
-  signal SCR		: std_logic_vector(11 downto 0);
+--  signal SCR		: std_logic_vector(11 downto 0);
   signal DCL		: std_logic_vector(11 downto 0);
   signal DCR		: std_logic_vector(11 downto 0);
   signal ACMO		: std_logic_vector(15 downto 0);
   signal ACRO 		: std_logic_vector(15 downto 0);
   signal BCMO		: std_logic_vector(15 downto 0);
   signal BCRO 		: std_logic_vector(15 downto 0);
-  signal SDO		:std_logic; 
-  signal SDOp		:std_logic; 
-  signal SDOc  		:std_logic_vector(15 downto 0);    
+--  signal SDO		:std_logic; 
+--  signal SDOp		:std_logic; 
+--  signal SDOc  		:std_logic_vector(15 downto 0);    
   signal FDIV	:std_logic_vector(7 downto 0);
   signal SDAC		:std_logic;
   signal pSltClk_nt :std_logic; 
@@ -391,9 +400,9 @@ architecture RTL of mcscc is
   signal MFL		:std_logic_vector(15 downto 0); 
   signal MFR		:std_logic_vector(15 downto 0);   
   signal MSL		:std_logic_vector(15 downto 0);   
-  signal MSR		:std_logic_vector(15 downto 0);
+--  signal MSR		:std_logic_vector(15 downto 0);
   signal MACL		:std_logic_vector(15 downto 0);   
-  signal MACR		:std_logic_vector(15 downto 0);      
+--  signal MACR		:std_logic_vector(15 downto 0);      
   signal LVF		:std_logic_vector(2 downto 0);
   signal LVS		:std_logic_vector(2 downto 0);
   signal LVL	    :std_logic_vector(7 downto 0) := "00011011" ;
@@ -475,6 +484,16 @@ architecture RTL of mcscc is
   signal PF0_RV :std_logic_vector(1 downto 0);
   signal CrSlt 	:std_logic_vector(1 downto 0);
   signal PFXN :std_logic_vector(1 downto 0):= "00";
+
+-- EPCS interface
+
+  signal EPC_Ctrl :std_logic_vector(7 downto 0) := "00000000";
+  signal EPC_CK :std_logic;
+  signal EPC_CS :std_logic;
+  signal EPC_OE :std_logic;
+  signal EPC_DI :std_logic;
+  signal EPC_DO :std_logic;
+
 begin
   ----------------------------------------------------------------
   -- Slot Select Disable trigger key
@@ -576,6 +595,7 @@ begin
 						     and pSltRd_n = '0') -- MMM page register read
 						 or (pSltAdr(7 downto 2) = "111111" and pSltIorq_n = '0' and Port3C(5) = '0'
 						     and pSltRd_n = '0' and MAPpEn = '1' and Mconf(6) = '1') -- MAP register read (port)
+						 or (pSltRd_n = '0' and pSltAdr(7 downto 0) = "00111101" and pSltIorq_n = '0') -- #3D port (EPCS)
 						 or (pSltRd_n = '0' and pSltAdr(7 downto 0) = "111100"&PFXN and pSltIorq_n = '0' and not(PF0_RV = "00")) -- #F0 port 
 						 or (Sltsl_F_n = '0' and pSltRd_n = '0' and pSltAdr(15 downto 1) = "011111111111011")-- FM page register
 					
@@ -631,6 +651,7 @@ begin
             else "ZZ" & MAP_FF(5 downto 0) when ((pSltAdr(7 downto 0) = "11111111" and pSltIorq_n = '0' and Port3C(5) = '0') -- MAP reg FF
                                                 or DEC_PFF ='1') and pSltRd_n = '0' and MAP_S = '0'
             else Port3C when DEC_P3C ='1' and pSltRd_n = '0'    
+            else EPC_Ctrl(7 downto 1) & EPC_DO when (pSltAdr(7 downto 0) = "00111101" and pSltIorq_n = '0'  and pSltRd_n = '0') -- #3D port (EPCS)
   -- Port #F0 (#F1,#F2,#F3) read
             else "00110010" when (pSltAdr(7 downto 0) = "111100"&PFXN and pSltIorq_n = '0' and PF0_RV = "01")-- char "2"
             else "001100"& CrSlt when (pSltAdr(7 downto 0) = "111100"&PFXN and pSltIorq_n = '0' and PF0_RV = "10")-- char "2"
@@ -719,19 +740,20 @@ begin
 
   pSltClk_n <= not pSltClk;
 
-  pSltBdir_n <= '1' 
+  pSltBdir_n <= 'Z' 
                     when pSltMerq_n = '0' and pSltAdr(15 downto 0) = "1111111111111111" and A8_save(7) = A8_save(6)
            else '0' when pSltSltsl_n = '0' and pSltRd_n = '0' 
            else '0' when pSltRd_n = '0' and pSltAdr(7 downto 2) = "111111" and pSltIorq_n = '0' 
                          and Port3C(5) = '0' and Mconf(6) = '1' and MAPpEn = '1'
+           else '0' when pSltRd_n = '0' and pSltAdr(7 downto 0) = "00111101" and pSltIorq_n = '0' -- #3D port (EPCS)
            else '0' when pSltRd_n = '0' and pSltAdr(7 downto 0) = "111100"&PFXN and pSltIorq_n = '0' and not(PF0_RV = "00")
-           else '0' when pSltRd_n = '0' and pSltAdr(7 downto 2) = "11110000" and pSltIorq_n = '0' and not(PF0_RV = "00")                
+    --     else '0' when pSltRd_n = '0' and pSltAdr(7 downto 2) = "11110000"    and pSltIorq_n = '0' and not(PF0_RV = "00")                
            else '0' when pSltRd_n = '0' and DecSCARD = '1' -- Second Cartgige read   
            else '0' when pSltRd_n = '0' and DecMCARD = '1' -- Primary Cartrige read non standart slot
            else '0' when pSltRd_n = '0' and pSltMerq_n = '0' and pSltAdr(15 downto 0) = "1111111111111111" and
                             A8_save(7 downto 0) = SCART_SLT(1 downto 0) and	SCART_cfg(7 downto 5) = "111" and SCART_cfg(2) = '1'-- Second Cartrige Expand Slot register
            else '0' when DOutEn_n = '0' and (DecMCARD = '1' or DecSCARD = '1')
- 		   else '1'
+ 		   else 'Z'
   ;
 
 --  pFlBYTE_n	<= ConfFl(2);
@@ -884,7 +906,9 @@ begin
          SCART_StBl <= "00000000"; aSCART_StBl <= "00000000";--"00001101"; -- "00000000";
 --- port #F0
          PF0_RV <= "00";
-       
+
+         EPC_Ctrl <= "00000000";
+
     elsif (pSltClk_n'event and pSltClk_n = '1') then
           -- Port #F0 decription
       if (pSltIorq_n = '0' and pSltWr_n = '0' and pSltAdr(7 downto 0) = "111100"&PFXN) then -- #F0
@@ -957,6 +981,11 @@ begin
         if (pSltAdr(5 downto 0) = "110000") then PsgAlt <= pSltDat (1 downto 0); end if;            
         if (pSltAdr(5 downto 0) = "110101") then PFXN <= pSltDat (1 downto 0); end if; 
       end if;
+
+      if (pSltIorq_n = '0' and pSltWr_n = '0' and pSltAdr(7 downto 0) = "00111101") then  -- #3D port (EPCS)
+        EPC_Ctrl <= pSltDat;
+      end if;
+
  -- V_hunt off
 --CIV      if V_active = "11" then
 --CIV        aV_hunt <= '0'; V_hunt <='0';
@@ -1802,7 +1831,7 @@ begin
 ----------------------------------------------------------------
 
   U1 : opll port map (pSltClk_n, open, xena, pSltDat, pYM2413_A, pYM2413_Cs_n, pYM2413_We_n, 
-                      pSltRst_n, BCMO, BCRO, SDO);
+                      pSltRst_n, BCMO, BCRO);
 --  clk21m <= pSltClk;
   pYM2413_A <= pSltAdr(0);
   xena <=  '1';
@@ -1827,7 +1856,7 @@ begin
 --  SCL <= ("0"&MO&"0")+('0'&(SccAmp+"100 0000 0000")) ;
 --  SCR <= ("0"&RO&"0")+('0'&(SccAmp+"10000000000")) ;
   SCL <= "100000000000" + SccAmp ;--+ PsgAmp + KC ;
-  SCR <= "100000000000" + SccAmp;-- + PsgAmp + KC ;
+--  SCR <= "100000000000" + SccAmp;-- + PsgAmp + KC ;
   process (pSltClk_n)
   begin
     if pSltRst_n = '0' then FDIV <= "00000000";
@@ -1852,11 +1881,11 @@ begin
   end process;
   process (pSltClk_n,LRCKe)
   begin
-    if  LRCKe = '1' then ACL <= "00000000000000000000"; ACR <= "00000000000000000000"; --(0)
+    if  LRCKe = '1' then ACL <= "00000000000000000000"; -- ACR <= "00000000000000000000"; --(0)
     elsif pSltClk_n'event and pSltClk_n ='0' then
       ACL <= ACL + (not SCL(11) & not SCL(11) & not SCL(11) & not SCL(11) & 
                     not SCL(11) & not SCL(11) & not SCL(11) & not SCL(11) & 
-                    not SCR(11) & SCL(10 downto 0) ) ;   -- (19-0)       
+                    not SCL(11) & SCL(10 downto 0) ) ;   -- (19-0)       
     end if;
   end process;
  -- process (FDIV(5),FDIV(0))
@@ -1866,7 +1895,7 @@ begin
 --    elsif FDIV(5)'event and FDIV(5) = '0' then
     elsif SDAC'event and SDAC = '0' then
       MACL <=  ACL(17 downto 2);
-      MACR <=  ACL(17 downto 2);
+--      MACR <=  ACL(17 downto 2);
 --    MACR <=  ACR(18 downto 3);-- (not ACR(19)) & ACR(18 downto 4);
       LRCKe <= '1';
     end if;
@@ -2098,6 +2127,7 @@ begin
   elsif pSltSltsls_n = '0' then RstEN <= '1';
   end if;
 end process;
+    pSltInt_n <= 'Z';
     pSltWait_n <= 'Z';
 --  pSltWait_n <= '1';
 --
@@ -2201,6 +2231,18 @@ end process;
           ) )  
         else  '0';
 
+----------------------------------------------------------------
+-- EPCS interface
+----------------------------------------------------------------
+
+  EPC_OE <= not pSltRst1_n;
+
+  EPC_CS <= not EPC_Ctrl(2);
+  EPC_CK <= not EPC_Ctrl(1);
+  EPC_DI <= EPC_Ctrl(0);
+
+  UEPCS4 : cycloneii_asmiblock
+    port map(EPC_CK, EPC_CS, EPC_DI, EPC_DO, EPC_OE);
 
 end RTL;
 
