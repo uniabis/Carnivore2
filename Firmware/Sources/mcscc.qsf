@@ -1,6 +1,6 @@
 # -------------------------------------------------------------------------- #
 #
-# Copyright (C) 1991-2009 Altera Corporation
+# Copyright (C) 1991-2013 Altera Corporation
 # Your use of Altera Corporation's design tools, logic functions 
 # and other software and tools, and its AMPP partner logic 
 # functions, and any output files from any of the foregoing 
@@ -16,16 +16,16 @@
 #
 # -------------------------------------------------------------------------- #
 #
-# Quartus II
-# Version 9.0 Build 132 02/25/2009 SJ Full Version
-# Date created = 19:45:57  July 26, 2015
+# Quartus II 64-Bit
+# Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+# Date created = 11:53:39  October 21, 2022
 #
 # -------------------------------------------------------------------------- #
 #
 # Notes:
 #
 # 1) The default values for assignments are stored in the file:
-#		scc_assignment_defaults.qdf
+#		mcscc_assignment_defaults.qdf
 #    If this file doesn't exist, see file:
 #		assignment_defaults.qdf
 #
@@ -36,13 +36,43 @@
 # -------------------------------------------------------------------------- #
 
 
-set_global_assignment -name FAMILY "Cyclone II"
-set_global_assignment -name DEVICE EP2C5Q208C8
-set_global_assignment -name TOP_LEVEL_ENTITY mcscc
+
+# Project-Wide Assignments
+# ========================
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 9.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "19:45:57  JULY 26, 2015"
 set_global_assignment -name LAST_QUARTUS_VERSION "13.0 SP1"
-set_global_assignment -name DEVICE_FILTER_PACKAGE "ANY QFP"
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 1
+set_global_assignment -name VHDL_FILE OPLL2/AttackTable.vhd
+set_global_assignment -name VHDL_FILE OPLL2/Controller.vhd
+set_global_assignment -name VHDL_FILE OPLL2/EnvelopeGenerator.vhd
+set_global_assignment -name VHDL_FILE OPLL2/EnvelopeMemory.vhd
+set_global_assignment -name VHDL_FILE OPLL2/FeedbackMemory.vhd
+set_global_assignment -name VHDL_FILE OPLL2/LinearTable.vhd
+set_global_assignment -name VHDL_FILE OPLL2/Operator.vhd
+set_global_assignment -name VHDL_FILE OPLL2/Opll.vhd
+set_global_assignment -name VHDL_FILE OPLL2/OutputGenerator.vhd
+set_global_assignment -name VHDL_FILE OPLL2/OutputMemory.vhd
+set_global_assignment -name VHDL_FILE OPLL2/PhaseGenerator.vhd
+set_global_assignment -name VHDL_FILE OPLL2/PhaseMemory.vhd
+set_global_assignment -name VHDL_FILE OPLL2/RegisterMemory.vhd
+set_global_assignment -name VHDL_FILE OPLL2/SineTable.vhd
+set_global_assignment -name VHDL_FILE OPLL2/SlotCounter.vhd
+set_global_assignment -name VHDL_FILE OPLL2/TemporalMixer.vhd
+set_global_assignment -name VHDL_FILE OPLL2/vm2413.vhd
+set_global_assignment -name VHDL_FILE OPLL2/VoiceMemory.vhd
+set_global_assignment -name VHDL_FILE OPLL2/VoiceRom.vhd
+set_global_assignment -name VHDL_FILE mcscc.vhd
+set_global_assignment -name VHDL_FILE lpm_ram.vhd
+set_global_assignment -name VHDL_FILE psg_wave.vhd
+set_global_assignment -name VERILOG_FILE scc_wave.v
+set_global_assignment -name QIP_FILE MPLL1.qip
+set_global_assignment -name QIP_FILE MPLL2.qip
+set_global_assignment -name VERILOG_FILE mv16.v
+set_global_assignment -name SDC_FILE mcscc.sdc
+
+# Pin & Location Assignments
+# ==========================
 set_location_assignment PIN_27 -to pSltClk
 set_location_assignment PIN_130 -to pSltClk2
 set_location_assignment PIN_89 -to pSltRst1_n
@@ -84,39 +114,23 @@ set_location_assignment PIN_59 -to pSltDat[4]
 set_location_assignment PIN_58 -to pSltDat[5]
 set_location_assignment PIN_57 -to pSltDat[6]
 set_location_assignment PIN_56 -to pSltDat[7]
-set_global_assignment -name FLEX6K_CONFIGURATION_DEVICE EPC2LC20
-set_global_assignment -name FLEX10K_CONFIGURATION_DEVICE EPC2
-set_global_assignment -name DISABLE_NCS_AND_OE_PULLUPS_ON_CONFIG_DEVICE OFF
-set_global_assignment -name FLEX10K_ENABLE_LOW_VOLTAGE_MODE_ON_CONFIG_DEVICE OFF
-set_global_assignment -name FLEX6K_OPTIMIZATION_TECHNIQUE AREA
-set_global_assignment -name FLEX10K_OPTIMIZATION_TECHNIQUE AREA
-set_global_assignment -name STATE_MACHINE_PROCESSING "MINIMAL BITS"
-set_global_assignment -name AUTO_FAST_INPUT_REGISTERS ON
-set_global_assignment -name AUTO_FAST_OUTPUT_REGISTERS ON
-set_global_assignment -name AUTO_PACKED_REGISTERS OFF
-set_global_assignment -name AUTO_OPEN_DRAIN_PINS ON
-set_global_assignment -name AUTO_IMPLEMENT_IN_ROM OFF
-set_global_assignment -name AUTO_GLOBAL_CLOCK ON
-set_global_assignment -name AUTO_GLOBAL_REGISTER_CONTROLS ON
-set_global_assignment -name AUTO_GLOBAL_OE ON
-set_global_assignment -name FLEX10K_DEVICE_IO_STANDARD LVTTL/LVCMOS
-set_location_assignment PIN_138 -to pFlAdr[8]
-set_location_assignment PIN_128 -to pFlAdr[14]
-set_location_assignment PIN_127 -to pFlAdr[15]
+set_location_assignment PIN_108 -to pFlW_n
+set_location_assignment PIN_114 -to pFlRP_n
+set_location_assignment PIN_113 -to pFlAdr[22]
+set_location_assignment PIN_115 -to pFlAdr[21]
+set_location_assignment PIN_39 -to pFlAdr[20]
+set_location_assignment PIN_135 -to pFlAdr[19]
+set_location_assignment PIN_137 -to pFlAdr[18]
+set_location_assignment PIN_160 -to pFlAdr[17]
 set_location_assignment PIN_120 -to pFlAdr[16]
+set_location_assignment PIN_127 -to pFlAdr[15]
+set_location_assignment PIN_128 -to pFlAdr[14]
 set_location_assignment PIN_133 -to pFlAdr[13]
 set_location_assignment PIN_119 -to pFlAdr[12]
 set_location_assignment PIN_118 -to pFlAdr[11]
 set_location_assignment PIN_117 -to pFlAdr[10]
 set_location_assignment PIN_116 -to pFlAdr[9]
-set_location_assignment PIN_137 -to pFlAdr[18]
-set_location_assignment PIN_135 -to pFlAdr[19]
-set_location_assignment PIN_108 -to pFlW_n
-set_location_assignment PIN_114 -to pFlRP_n
-set_location_assignment PIN_39 -to pFlAdr[20]
-set_location_assignment PIN_113 -to pFlAdr[22]
-set_location_assignment PIN_115 -to pFlAdr[21]
-set_location_assignment PIN_160 -to pFlAdr[17]
+set_location_assignment PIN_138 -to pFlAdr[8]
 set_location_assignment PIN_139 -to pFlAdr[7]
 set_location_assignment PIN_141 -to pFlAdr[6]
 set_location_assignment PIN_142 -to pFlAdr[5]
@@ -132,20 +146,12 @@ set_location_assignment PIN_164 -to pFlDat[5]
 set_location_assignment PIN_165 -to pFlDat[4]
 set_location_assignment PIN_168 -to pFlDat[3]
 set_location_assignment PIN_152 -to pFlDat[2]
+set_location_assignment PIN_151 -to pFlDat[1]
+set_location_assignment PIN_150 -to pFlDat[0]
 set_location_assignment PIN_149 -to pFlOE_n
 set_location_assignment PIN_45 -to pFlVpp
 set_location_assignment PIN_134 -to pFlRB_b
-
-set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
-set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
-set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
-set_global_assignment -name NUM_PARALLEL_PROCESSORS 1
-set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_location_assignment PIN_187 -to pRAMCS_n
-set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED WITH WEAK PULL-UP"
-set_global_assignment -name RESERVE_ASDO_AFTER_CONFIGURATION "AS INPUT TRI-STATED"
 set_location_assignment PIN_182 -to pIDEAdr[2]
 set_location_assignment PIN_181 -to pIDEAdr[1]
 set_location_assignment PIN_179 -to pIDEAdr[0]
@@ -169,13 +175,65 @@ set_location_assignment PIN_175 -to pIDEDat[1]
 set_location_assignment PIN_176 -to pIDEDat[0]
 set_location_assignment PIN_191 -to pIDERD_n
 set_location_assignment PIN_188 -to pIDEWR_n
-set_global_assignment -name STRATIX_CONFIGURATION_DEVICE AUTO
-set_global_assignment -name CYCLONEII_CONFIGURATION_SCHEME "ACTIVE SERIAL"
-set_location_assignment PIN_150 -to pFlDat[0]
-set_location_assignment PIN_151 -to pFlDat[1]
 set_location_assignment PIN_208 -to Key1_n
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to Key*
 set_location_assignment PIN_106 -to pSltSltsls_n
+set_location_assignment PIN_180 -to pPIN180
+set_location_assignment PIN_185 -to pIDE_Rst_n
+set_location_assignment PIN_3 -to MAPpEn
+set_location_assignment PIN_30 -to LRCK
+set_location_assignment PIN_31 -to SDATA
+set_location_assignment PIN_32 -to BICK
+set_location_assignment PIN_33 -to CKS
+set_location_assignment PIN_34 -to MCLK
+set_location_assignment PIN_35 -to IC_n
+set_location_assignment PIN_43 -to CLK50
+set_location_assignment PIN_189 -to SDOpo
+set_location_assignment PIN_12 -to EECS
+set_location_assignment PIN_13 -to EECK
+set_location_assignment PIN_14 -to EEDI
+set_location_assignment PIN_15 -to EEDO
+
+# Classic Timing Assignments
+# ==========================
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+
+# Analysis & Synthesis Assignments
+# ================================
+set_global_assignment -name FAMILY "Cyclone II"
+set_global_assignment -name TOP_LEVEL_ENTITY mcscc
+set_global_assignment -name DEVICE_FILTER_PACKAGE "ANY QFP"
+set_global_assignment -name FLEX6K_OPTIMIZATION_TECHNIQUE AREA
+set_global_assignment -name FLEX10K_OPTIMIZATION_TECHNIQUE AREA
+set_global_assignment -name STATE_MACHINE_PROCESSING "MINIMAL BITS"
+set_global_assignment -name AUTO_OPEN_DRAIN_PINS ON
+set_global_assignment -name AUTO_IMPLEMENT_IN_ROM OFF
+set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE AREA
+set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
+set_global_assignment -name AUTO_SHIFT_REGISTER_RECOGNITION ALWAYS
+set_global_assignment -name REMOVE_REDUNDANT_LOGIC_CELLS ON
+set_global_assignment -name MUX_RESTRUCTURE ON
+set_global_assignment -name ALLOW_ANY_ROM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_SHIFT_REGISTER_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_SHIFT_REGISTER_MERGING_ACROSS_HIERARCHIES ALWAYS
+set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS OFF
+set_global_assignment -name AUTO_RESOURCE_SHARING ON
+
+# Fitter Assignments
+# ==================
+set_global_assignment -name DEVICE EP2C5Q208C8
+set_global_assignment -name AUTO_FAST_INPUT_REGISTERS ON
+set_global_assignment -name AUTO_FAST_OUTPUT_REGISTERS ON
+set_global_assignment -name AUTO_PACKED_REGISTERS OFF
+set_global_assignment -name AUTO_GLOBAL_CLOCK ON
+set_global_assignment -name AUTO_GLOBAL_REGISTER_CONTROLS ON
+set_global_assignment -name AUTO_GLOBAL_OE ON
+set_global_assignment -name FLEX10K_DEVICE_IO_STANDARD LVTTL/LVCMOS
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS "AS INPUT TRI-STATED WITH WEAK PULL-UP"
+set_global_assignment -name RESERVE_ASDO_AFTER_CONFIGURATION "AS INPUT TRI-STATED"
+set_global_assignment -name CYCLONEII_CONFIGURATION_SCHEME "ACTIVE SERIAL"
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pFlAdr[22]
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pFlAdr[21]
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pFlAdr[20]
@@ -214,74 +272,62 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pFlRP_n
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pFlW_n
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pRAMCS_n
 set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
-set_location_assignment PIN_180 -to pPIN180
-set_location_assignment PIN_185 -to pIDE_Rst_n
-set_location_assignment PIN_3 -to MAPpEn
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to MAPpEn
-set_location_assignment PIN_30 -to LRCK
-set_location_assignment PIN_31 -to SDATA
-set_location_assignment PIN_32 -to BICK
-set_location_assignment PIN_33 -to CKS
-set_location_assignment PIN_34 -to MCLK
-set_location_assignment PIN_35 -to IC_n
-set_location_assignment PIN_43 -to CLK50
-set_global_assignment -name USE_CONFIGURATION_DEVICE ON
-set_location_assignment PIN_189 -to SDOpo
-set_location_assignment PIN_12 -to EECS
-set_location_assignment PIN_13 -to EECK
-set_location_assignment PIN_14 -to EEDI
-set_location_assignment PIN_15 -to EEDO
-set_global_assignment -name VHDL_FILE psg_wave.vhd
-set_global_assignment -name VHDL_FILE OPLL2/AttackTable.vhd
-set_global_assignment -name VHDL_FILE OPLL2/Controller.vhd
-set_global_assignment -name VHDL_FILE OPLL2/EnvelopeGenerator.vhd
-set_global_assignment -name VHDL_FILE OPLL2/EnvelopeMemory.vhd
-set_global_assignment -name VHDL_FILE OPLL2/FeedbackMemory.vhd
-set_global_assignment -name VHDL_FILE OPLL2/LinearTable.vhd
-set_global_assignment -name VHDL_FILE OPLL2/Operator.vhd
-set_global_assignment -name VHDL_FILE OPLL2/Opll.vhd
-set_global_assignment -name VHDL_FILE OPLL2/OutputGenerator.vhd
-set_global_assignment -name VHDL_FILE OPLL2/OutputMemory.vhd
-set_global_assignment -name VHDL_FILE OPLL2/PhaseGenerator.vhd
-set_global_assignment -name VHDL_FILE OPLL2/PhaseMemory.vhd
-set_global_assignment -name VHDL_FILE OPLL2/RegisterMemory.vhd
-set_global_assignment -name VHDL_FILE OPLL2/SineTable.vhd
-set_global_assignment -name VHDL_FILE OPLL2/SlotCounter.vhd
-set_global_assignment -name VHDL_FILE OPLL2/TemporalMixer.vhd
-set_global_assignment -name VHDL_FILE OPLL2/vm2413.vhd
-set_global_assignment -name VHDL_FILE OPLL2/VoiceMemory.vhd
-set_global_assignment -name VHDL_FILE OPLL2/VoiceRom.vhd
-set_global_assignment -name VHDL_FILE mcscc.vhd
-set_global_assignment -name VHDL_FILE lpm_ram.vhd
-set_global_assignment -name VERILOG_FILE scc_wave.v
-set_global_assignment -name CDF_FILE scc.cdf
-set_global_assignment -name QIP_FILE MPLL1.qip
-set_global_assignment -name QIP_FILE MPLL2.qip
-set_global_assignment -name VERILOG_FILE mv16.v
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to pSltDat
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-DOWN" -to "pIDEDat(7)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(0)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(1)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(2)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(3)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(4)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(5)"
-set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(6)"
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
-set_global_assignment -name CYCLONEII_OPTIMIZATION_TECHNIQUE AREA
-set_global_assignment -name ADV_NETLIST_OPT_SYNTH_WYSIWYG_REMAP ON
-set_global_assignment -name AUTO_SHIFT_REGISTER_RECOGNITION ALWAYS
-set_global_assignment -name REMOVE_REDUNDANT_LOGIC_CELLS ON
-set_global_assignment -name MUX_RESTRUCTURE ON
-set_global_assignment -name ALLOW_ANY_ROM_SIZE_FOR_RECOGNITION ON
-set_global_assignment -name ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION ON
-set_global_assignment -name ALLOW_ANY_SHIFT_REGISTER_SIZE_FOR_RECOGNITION ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_COMBO_LOGIC_FOR_AREA ON
 set_global_assignment -name PHYSICAL_SYNTHESIS_MAP_LOGIC_TO_MEMORY_FOR_AREA ON
-set_global_assignment -name ALLOW_SHIFT_REGISTER_MERGING_ACROSS_HIERARCHIES ALWAYS
-set_global_assignment -name SYNTH_TIMING_DRIVEN_SYNTHESIS OFF
-set_global_assignment -name AUTO_RESOURCE_SHARING ON
-set_global_assignment -name SDC_FILE mcscc.sdc
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+
+# Assembler Assignments
+# =====================
+set_global_assignment -name FLEX6K_CONFIGURATION_DEVICE EPC2LC20
+set_global_assignment -name FLEX10K_CONFIGURATION_DEVICE EPC2
+set_global_assignment -name DISABLE_NCS_AND_OE_PULLUPS_ON_CONFIG_DEVICE OFF
+set_global_assignment -name FLEX10K_ENABLE_LOW_VOLTAGE_MODE_ON_CONFIG_DEVICE OFF
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
+set_global_assignment -name STRATIX_CONFIGURATION_DEVICE AUTO
+set_global_assignment -name USE_CONFIGURATION_DEVICE ON
+
+# -------------------
+# start ENTITY(mcscc)
+
+	# Fitter Assignments
+	# ==================
+	set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to Key*
+	set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to MAPpEn
+	set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to pSltDat
+
+	# Simulator Assignments
+	# =====================
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-DOWN" -to "pIDEDat(7)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(0)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(1)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(2)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(3)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(4)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(5)"
+	set_instance_assignment -name PASSIVE_RESISTOR "PULL-UP" -to "pIDEDat(6)"
+
+	# start LOGICLOCK_REGION(Root Region)
+	# -----------------------------------
+
+		# LogicLock Region Assignments
+		# ============================
+		set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+		set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+
+	# end LOGICLOCK_REGION(Root Region)
+	# ---------------------------------
+
+	# start DESIGN_PARTITION(Top)
+	# ---------------------------
+
+		# Incremental Compilation Assignments
+		# ===================================
+		set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+		set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+		set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+		set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+
+	# end DESIGN_PARTITION(Top)
+	# -------------------------
+
+# end ENTITY(mcscc)
+# -----------------
